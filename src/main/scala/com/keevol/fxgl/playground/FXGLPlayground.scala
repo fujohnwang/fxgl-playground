@@ -1,6 +1,6 @@
 package com.keevol.fxgl.playground
 
-import com.almasb.fxgl.app.{GameApplication, GameSettings}
+import com.almasb.fxgl.app.{GameApplication, GameSettings, MenuItem}
 import com.almasb.fxgl.audio.Music
 import com.almasb.fxgl.dsl.FXGL
 import com.keevol.javafx.utils.Labels
@@ -11,11 +11,17 @@ import java.util
 
 class Game extends GameApplication {
   override def initSettings(gameSettings: GameSettings): Unit = {
-    gameSettings.setMainMenuEnabled(true)
     gameSettings.setWidth(900);
     gameSettings.setHeight(600);
     gameSettings.setTitle("福强的第一个FXGL游戏");
     gameSettings.setVersion("0.1");
+    gameSettings.setMainMenuEnabled(true)
+    gameSettings.setGameMenuEnabled(true);
+    gameSettings.setFullScreenAllowed(true);
+    gameSettings.setEnabledMenuItems(util.EnumSet.of(MenuItem.EXTRA));
+    gameSettings.getCredits().addAll(util.Arrays.asList(
+      "Fuqiang Wang - Programmer"
+    ));
   }
 
 
@@ -35,8 +41,14 @@ class Game extends GameApplication {
   override def initInput(): Unit = {
     FXGL.onKey(KeyCode.A, ()=> FXGL.inc("lives", 1))
     FXGL.onKey(KeyCode.D, ()=> FXGL.inc("lives", -1))
-    FXGL.onKey(KeyCode.W, ()=> FXGL.inc("lives", 10))
-    FXGL.onKey(KeyCode.S, ()=> FXGL.inc("lives", -10))
+    FXGL.onKey(KeyCode.W, ()=> {
+      FXGL.inc("lives", 10)
+      FXGL.play("drop.wav")
+    })
+    FXGL.onKey(KeyCode.S, ()=> {
+      FXGL.inc("lives", -10)
+      FXGL.play("drop.wav")
+    })
   }
 
   override def initGame(): Unit = {
