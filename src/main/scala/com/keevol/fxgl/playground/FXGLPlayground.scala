@@ -1,8 +1,10 @@
 package com.keevol.fxgl.playground
 
 import com.almasb.fxgl.app.{GameApplication, GameSettings}
+import com.almasb.fxgl.audio.Music
 import com.almasb.fxgl.dsl.FXGL
 import com.keevol.javafx.utils.Labels
+import javafx.scene.input.KeyCode
 import javafx.scene.text.Font
 
 import java.util
@@ -28,6 +30,17 @@ class Game extends GameApplication {
     label.setTranslateY(300)
     label.textProperty().bind(FXGL.getWorldProperties.intProperty("lives").asString())
     FXGL.addUINode(label)
+  }
+
+  override def initInput(): Unit = {
+    FXGL.onKey(KeyCode.A, ()=> FXGL.inc("lives", 1))
+    FXGL.onKey(KeyCode.D, ()=> FXGL.inc("lives", -1))
+    FXGL.onKey(KeyCode.W, ()=> FXGL.inc("lives", 10))
+    FXGL.onKey(KeyCode.S, ()=> FXGL.inc("lives", -10))
+  }
+
+  override def initGame(): Unit = {
+    FXGL.loopBGM("bg.mp3") // as convention, music file is under /assets/music path.
   }
 }
 
