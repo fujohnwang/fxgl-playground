@@ -82,7 +82,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.keevol.keefx.samplers.KeeFXSamplerLauncher</mainClass>
+					<mainClass>com.keevol.fxgl.playground.FXGLPlayground</mainClass>
 				</configuration>
 				<executions>
 					<execution>

@@ -12,7 +12,7 @@ class Game extends GameApplication {
     gameSettings.setMainMenuEnabled(true)
     gameSettings.setWidth(900);
     gameSettings.setHeight(600);
-    gameSettings.setTitle("Basic Game App");
+    gameSettings.setTitle("福强的第一个FXGL游戏");
     gameSettings.setVersion("0.1");
   }
 
