@@ -9,7 +9,7 @@ import com.keevol.javafx.utils.Labels
 import javafx.event.EventType
 import javafx.scene.control.Button
 import javafx.scene.input.KeyCode
-import javafx.scene.paint.Color
+import javafx.scene.paint.{Color, Paint}
 import javafx.scene.text.Font
 
 import java.util
@@ -17,7 +17,7 @@ import java.util
 class Game extends GameApplication {
   override def initSettings(gameSettings: GameSettings): Unit = {
     gameSettings.setWidth(900);
-    gameSettings.setHeight(600);
+    gameSettings.setHeight(600)
     gameSettings.setTitle("福强的第一个FXGL游戏");
     gameSettings.setVersion("0.1");
     //    gameSettings.setMainMenuEnabled(true)
@@ -37,6 +37,8 @@ class Game extends GameApplication {
   }
 
   override def initUI(): Unit = {
+
+    getGameScene.setBackgroundColor(Paint.valueOf("black"))
     val label = FXGL.getUIFactoryService.newText("lives in the game: 3", Color.RED, 111)
 //    label.setFont(Font.font(111))
     label.setTranslateX(300)
