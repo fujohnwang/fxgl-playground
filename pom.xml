@@ -12,11 +12,11 @@
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>20</java.version>
-        <scala.version>2.12.15</scala.version>
+        <java.version>21</java.version>
+        <scala.version>2.12.18</scala.version>
         <scala.compatible.version>2.12</scala.compatible.version>
         <scala.plugin.version>4.8.1</scala.plugin.version>
-		<javafx.version>20.0.1</javafx.version>
+		<javafx.version>21</javafx.version>
     </properties>
 
 	<build>
@@ -30,7 +30,6 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<compilerArgs>
                         <arg>-parameters</arg>
-                        <arg>--enable-preview</arg>
                         <arg>-Xlint:deprecation</arg>
                         <arg>-Xlint:preview</arg>
                     </compilerArgs>
