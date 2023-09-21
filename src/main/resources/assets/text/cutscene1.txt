@@ -1,0 +1,9 @@
+
+1.name = fq
+1.image = avatars/taichi_fighter.png
+2.name = lolo
+2.image = avatars/random_female0.png
+
+1: 你瞎呀？
+2: 你没长眼啊？
+

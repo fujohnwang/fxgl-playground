@@ -3,12 +3,14 @@ package com.keevol.fxgl.playground
 import com.almasb.fxgl.achievement.{Achievement, AchievementEvent}
 import com.almasb.fxgl.app.{GameApplication, GameSettings, MenuItem}
 import com.almasb.fxgl.audio.Music
+import com.almasb.fxgl.cutscene.Cutscene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL._
+import com.almasb.fxgl.input.{InputModifier, UserAction}
 import com.keevol.javafx.utils.Labels
 import javafx.event.EventType
 import javafx.scene.control.Button
-import javafx.scene.input.KeyCode
+import javafx.scene.input.{KeyCode, MouseButton}
 import javafx.scene.paint.{Color, Paint}
 import javafx.scene.text.Font
 
@@ -18,7 +20,7 @@ class Game extends GameApplication {
   override def initSettings(gameSettings: GameSettings): Unit = {
     gameSettings.setWidth(900);
     gameSettings.setHeight(600)
-    gameSettings.setTitle("福强的第一个FXGL游戏");
+    gameSettings.setTitle("福强游戏demo");
     gameSettings.setVersion("0.1");
     //    gameSettings.setMainMenuEnabled(true)
     gameSettings.setGameMenuEnabled(true);
@@ -37,18 +39,19 @@ class Game extends GameApplication {
   }
 
   override def initUI(): Unit = {
+    getGameScene.setBackgroundColor(Color.GRAY)
 
-    getGameScene.setBackgroundColor(Paint.valueOf("black"))
     val label = FXGL.getUIFactoryService.newText("lives in the game: 3", Color.RED, 111)
-//    label.setFont(Font.font(111))
+    //    label.setFont(Font.font(111))
     label.setTranslateX(300)
     label.setTranslateY(300)
     label.textProperty().bind(FXGL.getWorldProperties.intProperty("lives").asString())
     FXGL.addUINode(label)
 
     val button = FXGL.getUIFactoryService.newButton("notify demo")
+    button.setFocusTraversable(false)
     button.setOnAction(_ => FXGL.getNotificationService.pushNotification("demo message"))
-    FXGL.addUINode(button,FXGL.getSettings.getWidth - 250 , FXGL.getSettings.getHeight - button.getHeight - 100 )
+    FXGL.addUINode(button, FXGL.getSettings.getWidth - 250, FXGL.getSettings.getHeight - button.getHeight - 100)
   }
 
   override def initInput(): Unit = {
@@ -64,11 +67,19 @@ class Game extends GameApplication {
     })
     // after import com.almasb.fxgl.dsl.FXGL._, code can be simplified.
     onKeyUp(KeyCode.N, "push notification", () => getNotificationService.pushNotification("demo message with hotkey pressed."))
+
+    onKeyDown(KeyCode.C, ()=> {
+      val lines = getAssetLoader().loadText("cutscene1.txt");
+
+      var cutscene = new Cutscene(lines);
+
+      getCutsceneService().startCutscene(cutscene);
+    })
   }
 
   override def initGame(): Unit = {
     FXGL.loopBGM("bg.mp3") // as convention, music file is under /assets/music path.
-    FXGL.getEventBus.addEventHandler(AchievementEvent.ACHIEVED, (e:AchievementEvent) => getNotificationService.pushNotification(s"${e.getAchievement.getName} is done! ✅"))
+    FXGL.getEventBus.addEventHandler(AchievementEvent.ACHIEVED, (e: AchievementEvent) => getNotificationService.pushNotification(s"${e.getAchievement.getName} is done! ✅"))
   }
 }
 
@@ -77,3 +88,6 @@ object FXGLPlayground {
     GameApplication.launch(classOf[Game], args)
   }
 }
+
+
+
