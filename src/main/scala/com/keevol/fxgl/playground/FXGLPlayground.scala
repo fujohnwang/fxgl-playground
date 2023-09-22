@@ -6,7 +6,7 @@ import com.almasb.fxgl.audio.Music
 import com.almasb.fxgl.cutscene.Cutscene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL._
-import com.almasb.fxgl.input.{InputModifier, UserAction}
+import com.almasb.fxgl.input.{InputModifier, MouseTrigger, TriggerListener, UserAction}
 import com.almasb.fxgl.ui.FXGLButton
 import com.keevol.javafx.utils.Labels
 import javafx.event.EventType
@@ -59,13 +59,13 @@ class Game extends GameApplication {
   }
 
   override def initInput(): Unit = {
-    FXGL.onKey(KeyCode.A, "左", () => FXGL.inc("lives", 1))
-    FXGL.onKey(KeyCode.D, "右", () => FXGL.inc("lives", -1))
-    FXGL.onKey(KeyCode.W, "Up", () => {
+    FXGL.onKeyDown(KeyCode.A, "左", () => FXGL.inc("lives", 1))
+    FXGL.onKeyDown(KeyCode.D, "右", () => FXGL.inc("lives", -1))
+    FXGL.onKeyDown(KeyCode.W, "Up", () => {
       FXGL.inc("lives", 10)
       FXGL.play("drop.wav")
     })
-    FXGL.onKey(KeyCode.S, "Down", () => {
+    FXGL.onKeyDown(KeyCode.S, "Down", () => {
       FXGL.inc("lives", -10)
       FXGL.play("drop.wav")
     })
@@ -78,6 +78,13 @@ class Game extends GameApplication {
       var cutscene = new Cutscene(lines);
 
       getCutsceneService().startCutscene(cutscene);
+    })
+
+    onBtnDown(MouseButton.PRIMARY, ()=>{
+      println(s"left button clicked, ${getInput.getMouseXUI}:${getInput.getMouseYUI}")
+    })
+    onBtnDown(MouseButton.SECONDARY, ()=> {
+      println("右键点击")
     })
   }
 
