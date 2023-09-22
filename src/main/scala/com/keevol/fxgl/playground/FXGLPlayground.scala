@@ -7,6 +7,7 @@ import com.almasb.fxgl.cutscene.Cutscene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL._
 import com.almasb.fxgl.input.{InputModifier, UserAction}
+import com.almasb.fxgl.ui.FXGLButton
 import com.keevol.javafx.utils.Labels
 import javafx.event.EventType
 import javafx.scene.control.Button
@@ -31,6 +32,7 @@ class Game extends GameApplication {
     ));
 
     gameSettings.getAchievements.add(new Achievement("sampleAchievement", "desc", "lives", 100))
+    gameSettings.getCSSList.add("style.css")
   }
 
 
@@ -39,7 +41,8 @@ class Game extends GameApplication {
   }
 
   override def initUI(): Unit = {
-    getGameScene.setBackgroundColor(Color.GRAY)
+    //    getGameScene.setBackgroundColor(Color.GRAY)
+    getGameScene.setBackgroundRepeat("bg/bug_elephant.jpg")
 
     val label = FXGL.getUIFactoryService.newText("lives in the game: 3", Color.RED, 111)
     //    label.setFont(Font.font(111))
@@ -48,10 +51,11 @@ class Game extends GameApplication {
     label.textProperty().bind(FXGL.getWorldProperties.intProperty("lives").asString())
     FXGL.addUINode(label)
 
-    val button = FXGL.getUIFactoryService.newButton("notify demo")
+    val button = new FXGLButton("notify demo")
     button.setFocusTraversable(false)
     button.setOnAction(_ => FXGL.getNotificationService.pushNotification("demo message"))
     FXGL.addUINode(button, FXGL.getSettings.getWidth - 250, FXGL.getSettings.getHeight - button.getHeight - 100)
+
   }
 
   override def initInput(): Unit = {
@@ -68,7 +72,7 @@ class Game extends GameApplication {
     // after import com.almasb.fxgl.dsl.FXGL._, code can be simplified.
     onKeyUp(KeyCode.N, "push notification", () => getNotificationService.pushNotification("demo message with hotkey pressed."))
 
-    onKeyDown(KeyCode.C, ()=> {
+    onKeyDown(KeyCode.C, () => {
       val lines = getAssetLoader().loadText("cutscene1.txt");
 
       var cutscene = new Cutscene(lines);
