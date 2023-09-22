@@ -1,6 +1,7 @@
 package com.keevol.fxgl.playground
 
 import com.almasb.fxgl.achievement.{Achievement, AchievementEvent}
+import com.almasb.fxgl.app.scene.{FXGLScene, SceneFactory, StartupScene}
 import com.almasb.fxgl.app.{GameApplication, GameSettings, MenuItem}
 import com.almasb.fxgl.audio.Music
 import com.almasb.fxgl.cutscene.Cutscene
@@ -10,7 +11,8 @@ import com.almasb.fxgl.input.{InputModifier, MouseTrigger, TriggerListener, User
 import com.almasb.fxgl.ui.FXGLButton
 import com.keevol.javafx.utils.Labels
 import javafx.event.EventType
-import javafx.scene.control.Button
+import javafx.scene.control.{Button, Label}
+import javafx.scene.image.ImageView
 import javafx.scene.input.{KeyCode, MouseButton}
 import javafx.scene.paint.{Color, Paint}
 import javafx.scene.text.Font
@@ -33,6 +35,17 @@ class Game extends GameApplication {
 
     gameSettings.getAchievements.add(new Achievement("sampleAchievement", "desc", "lives", 100))
     gameSettings.getCSSList.add("style.css")
+    gameSettings.setSceneFactory(new SceneFactory() {
+
+      override def newStartup(width: Int, height: Int): StartupScene = new StartupScene(width, height) {
+        val label = new Label("KEEVOL")
+        label.setFont(Font.font(111))
+        label.setTranslateX(width / 2 - 200)
+        label.setTranslateY(height / 2 - 100)
+        getContentRoot.getChildren.add(label)
+      }
+
+    })
   }
 
 
@@ -80,10 +93,10 @@ class Game extends GameApplication {
       getCutsceneService().startCutscene(cutscene);
     })
 
-    onBtnDown(MouseButton.PRIMARY, ()=>{
+    onBtnDown(MouseButton.PRIMARY, () => {
       println(s"left button clicked, ${getInput.getMouseXUI}:${getInput.getMouseYUI}")
     })
-    onBtnDown(MouseButton.SECONDARY, ()=> {
+    onBtnDown(MouseButton.SECONDARY, () => {
       println("右键点击")
     })
   }
