@@ -14,8 +14,10 @@ import javafx.event.EventType
 import javafx.scene.control.{Button, Label}
 import javafx.scene.image.ImageView
 import javafx.scene.input.{KeyCode, MouseButton}
+import javafx.scene.layout.StackPane
 import javafx.scene.paint.{Color, Paint}
-import javafx.scene.text.Font
+import javafx.scene.shape.Rectangle
+import javafx.scene.text.{Font, Text}
 
 import java.util
 
@@ -38,11 +40,13 @@ class Game extends GameApplication {
     gameSettings.setSceneFactory(new SceneFactory() {
 
       override def newStartup(width: Int, height: Int): StartupScene = new StartupScene(width, height) {
-        val label = new Label("KEEVOL")
-        label.setFont(Font.font(111))
-        label.setTranslateX(width / 2 - 200)
-        label.setTranslateY(height / 2 - 100)
-        getContentRoot.getChildren.add(label)
+        val bg = new Rectangle(width, height)
+
+        val textCompanyName = new Text("Fuqiang")
+        textCompanyName.setFill(Color.WHITE)
+        textCompanyName.setFont(Font.font(111))
+
+        getContentRoot.getChildren.addAll(new StackPane(bg, textCompanyName))
       }
 
     })
