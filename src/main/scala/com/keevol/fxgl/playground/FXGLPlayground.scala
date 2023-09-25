@@ -70,7 +70,7 @@ class Game extends GameApplication {
 
     val button = new FXGLButton("notify demo")
     button.setFocusTraversable(false)
-    button.setOnAction(_ => FXGL.getNotificationService.pushNotification("demo message"))
+    button.setOnAction(_ => FXGL.getNotificationService.pushNotification("demo message", texture("avatars/random_female0.png")))
     FXGL.addUINode(button, FXGL.getSettings.getWidth - 250, FXGL.getSettings.getHeight - button.getHeight - 100)
 
   }
@@ -87,7 +87,7 @@ class Game extends GameApplication {
       FXGL.play("drop.wav")
     })
     // after import com.almasb.fxgl.dsl.FXGL._, code can be simplified.
-    onKeyUp(KeyCode.N, "push notification", () => getNotificationService.pushNotification("demo message with hotkey pressed."))
+    onKeyUp(KeyCode.N, "push notification", () => getNotificationService.pushNotification("demo message with hotkey pressed.", texture("qrcode_for_keevol.jpg",45,45)))
 
     onKeyDown(KeyCode.C, () => {
       val lines = getAssetLoader().loadText("cutscene1.txt");
